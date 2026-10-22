@@ -7,40 +7,25 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<%@ include file="../db.jsp" %>
+	<%@ include file="../db.jsp" %>
 	<%
 		String userId = request.getParameter("userId");
 		String pwd = request.getParameter("pwd");
 		String userName = request.getParameter("userName");
-		
-		String query = "INSERT INTO TBL_USER (USERID, PWD, NAME) VALUES (" 
-		+ "'" + userId + "', " 
-		+ "'" + pwd + "', " 
-		+ "'" + userName + "')";
-		
+	
+		String query = "INSERT INTO TBL_USER(USERID, PWD, NAME) VALUES("
+					+ "'" + userId + "',"
+					+ "'" + pwd + "',"
+					+ "'" + userName + "')";
 		int result = stmt.executeUpdate(query);
-		if(result > 0) {
+		if(result > 0){
 			out.println("가입 성공!");
 		} else {
-			out.println("가입 실패");
+			out.println("가입 실패!");
 		}
-		
-		
-		/* ResultSet rs = stmt.executeQuery(query);
-		
-		while(rs.next()){
-		out.print(rs.getString("NAME"));
-		}
-		
-		if(rs.next()){
-		out.println("로그인 성공");
-		response.sendRedirect("board-list.jsp");
-		} else {
-		out.println("로그인 실패");			
-		} */
-		
 	%>
-
 </body>
 </html>
+
+
+

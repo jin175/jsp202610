@@ -7,7 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<form name="form" action="login-result.jsp" method="get">
 		<div>
 			<label>아이디 : <input name="userId"></label>
@@ -17,13 +16,12 @@
 		</div>
 		<div>
 			<input type="submit" value="로그인">
-			<input type="button" value="검증하고 전달" onclick="fnLogin()">
+			<input type="button" value="검증 하고 전달" onclick="fnLogin()">
 		</div>
+		
 	</form>
-	
 </body>
 </html>
-
 <script>
 	function fnLogin(){
 		let form = document.form;
@@ -33,6 +31,10 @@
 			return;
 		}
 		form.submit();
+		
 	}
-
 </script>
+
+
+
+

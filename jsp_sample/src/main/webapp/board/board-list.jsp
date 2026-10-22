@@ -10,73 +10,81 @@
 		border : 2px solid black;
 		border-collapse: collapse;
 		padding : 5px 10px;
-		text-align : center;
-	
+		text-align: center;
 	}
-
-
 </style>
-
-
 </head>
 <body>
-
-
-
-
-	<%@ include file = "../db.jsp" %>
+	<%@ include file="../db.jsp" %>
+	<h4 style="display : inline-block;"><%= session.getAttribute("sessionName") %> 님이 접속중 입니다.</h4>
+	<a href="login.jsp"><button>로그아웃</button></a>
+	<hr>
 	<h2>게시글 목록</h2>
 	<hr>
-	<% 
+	
+	<%
 		ResultSet rs = null;
 		String query = "SELECT * FROM TBL_BOARD";
+		String sessionRole = (String) session.getAttribute("sessionRole");
+		String sessionId = (String) session.getAttribute("sessionId");
 		rs = stmt.executeQuery(query);
-		%>
-		
-		
-	<table>
-	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>조회수</th>
-		
-	</tr>
-	<% 
-		while(rs.next()){
-			// out.println("<div>" + rs.getString("CONTENTS") + "</div>");
-			
 	%>
 	
+	<table>
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>조회수</th>
+			<th>삭제</th>
+		</tr>
+	<%	
+		while(rs.next()){
+			// out.println("<div>" + rs.getString("CONTENTS") + "</div>");
+	%>
 		<tr>
 			<td><%= rs.getString("BOARDNO") %></td>
 			<td>
 				<a href="javascript:;" onclick="fnView(<%= rs.getString("BOARDNO") %>)"><%= rs.getString("TITLE") %></a>
-				</td>
+			</td>
 			<td><%= rs.getString("USERID") %></td>
 			<td><%= rs.getString("CNT") %></td>
+			<td>
+			
+			
+				<% 
+					if(sessionId.equals(rs.getString("USERID")) || sessionRole.equals("A")){
+						%>
+						
+						<button onclick="fnRemove(<%= rs.getString("BOARDNO") %>)">삭제</button></td>
+					<%
+					}
+				%>
+				
 		</tr>
-	
-	<%
+	<%				
 		}
+		
 	%>
-	
 	</table>
-
 	<div>
-		<buttom>글쓰기</buttom>
+		<a href="board-add.jsp"><button>글쓰기</button></a>
 	</div>
-	
-
-	
 </body>
 </html>
-
 <script>
-
 	function fnView(boardNo){
-		location.href = "board-view.jsp?boardNo="+boardNo; // 주소에 공백은 문자취급됨!
-		
+		location.href = "board-view.jsp?boardNo="+boardNo;
 	}
 	
+	function fnRemove(boardNo){
+		if(!confirm("정말 삭제??")){
+			return;
+		}
+		location.href = "board-remove-result.jsp?boardNo="+boardNo;
+	}
 </script>
+
+
+
+
